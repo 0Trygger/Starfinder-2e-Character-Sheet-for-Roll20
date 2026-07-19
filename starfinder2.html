@@ -13,7 +13,7 @@
     <input class="toggles" name="attr_toggles" type="hidden" value="color:default,innate,focus,cantrips,normalspells,"/><div class="pc-info">
     <!-- Pathfinder Character Sheet -->
     <div class="column">
-        <img alt="Starfinder second edition logo" src="https://cdn.paizo.com/d960ad1b-9967-00f9-1158-72274b18312d/c1f8b24a-7e41-4f95-9c8b-08feaeff5fb7/Starfinder_2ELogo.png?w=800" />
+        <img alt="Starfinder second edition logo" src="PASTE_YOUR_STARFINDER_LOGO_URL_HERE" />
         <h1 data-i18n="character_sheet">character sheet</h1>
         <div class="character-prof">
             <h2 data-i18n="proficiency">proficiency</h2>
@@ -3620,28 +3620,10 @@
                     <input name="attr_maximum_modifier" type="number" value="0"/>
                 </div>
             </div>
-            <div class="coins">
-                <h2 data-i18n="cp">cp</h2>
-                <label data-i18n-title="copper_pieces" title="copper pieces">
-                    <input class="circle coins-circle" data-i18n-placeholder="0" name="attr_cp" placeholder="0" spellcheck="false" title="@{cp}" type="text" value="" />
-                </label>
-            </div>
-            <div class="coins">
-                <h2 data-i18n="sp">sp</h2>
-                <label data-i18n-title="silver_pieces" title="silver pieces">
-                    <input class="circle coins-circle" data-i18n-placeholder="0" name="attr_sp" placeholder="0" spellcheck="false" title="@{sp}" type="text" value="" />
-                </label>
-            </div>
-            <div class="coins">
-                <h2 data-i18n="gp">gp</h2>
-                <label data-i18n-title="gold_pieces" title="gold pieces">
-                    <input class="circle coins-circle" data-i18n-placeholder="0" name="attr_gp" placeholder="0" spellcheck="false" title="@{gp}" type="text" value="" />
-                </label>
-            </div>
-            <div class="coins">
-                <h2 data-i18n="pp">pp</h2>
-                <label data-i18n-title="platinum_pieces" title="platinum pieces">
-                    <input class="circle coins-circle" data-i18n-placeholder="0" name="attr_pp" placeholder="0" spellcheck="false" title="@{pp}" type="text" value="" />
+            <div class="coins credits">
+                <h2 data-i18n="credits">credits</h2>
+                <label data-i18n-title="credits" title="credits">
+                    <input class="circle coins-circle" data-i18n-placeholder="0" name="attr_credits" placeholder="0" spellcheck="false" title="@{credits}" type="text" value="" />
                 </label>
             </div>
         </div>
@@ -5554,7 +5536,7 @@ var modPf2 = (function () {
         // == Gathering all necessary repeating section IDs
         getRepSecIds(JSON.parse(JSON.stringify(Object.values(global_repsecs))), (repsec_agr) => {
             // == Gathering all necessary attributes
-            let tmpfields = ["character_name","sheet_type","level","query_roll_damage_dice","cp","sp","gp","pp","spell_attack","spell_dc","roll_option_critical_damage"];
+            let tmpfields = ["character_name","sheet_type","level","query_roll_damage_dice","credits","spell_attack","spell_dc","roll_option_critical_damage"];
             // --- Ability modifiers, Perception, Class DC, Hit Points
             tmpfields.push(...global_attributes_by_category["ability_modifiers"],...global_attributes_by_category["perception"],...global_attributes_by_category["class_dc"],...global_attributes_by_category["hit_points"],...global_attributes_by_category["spell_attack"],...global_attributes_by_category["spell_dc"], ...global_attributes_by_category["encumbrance_attributes"]);
             // --- Skills, Saves, AC etc.
@@ -6688,7 +6670,7 @@ var modPf2 = (function () {
             repsecs[category] = {"section": `items-${category}`, "attrs": global_attributes_by_category["bulks_fields"].map(attr => `${category}_${attr}`)};
         });
         getRepSecIds(JSON.parse(JSON.stringify(Object.values(repsecs))), (repsec_agr) => {
-            let fields = getRepSecFields(repsec_agr, Array.from(new Set(["cp","sp","gp","pp"])));
+            let fields = getRepSecFields(repsec_agr, Array.from(new Set([])));
             getAttrs(fields, (values) => {
                 setAttrs(calcBulk(values,repsec_agr), {silent: true}, () => {
                     if(callback) {
@@ -6700,7 +6682,7 @@ var modPf2 = (function () {
     };
     const calcBulk = function(values,repsec_agr) {
         let update = {};
-        let total = 0, light = 0, coins = 0, other = 0;
+        let total = 0, light = 0, other = 0;
         // Tallying bulk values from various items
         global_attributes_by_category["repeating_bulks"].forEach(category => {
             repsec_agr.filter(current_section => current_section.section == `items-${category}`)[0].ids.forEach(category_id => {
@@ -6713,13 +6695,8 @@ var modPf2 = (function () {
                 }
             });
         });
-        // Coins
-        coins = 0
-            + (parseInt(values["cp"]) || 0)
-            + (parseInt(values["sp"]) || 0)
-            + (parseInt(values["gp"]) || 0)
-            + (parseInt(values["pp"]) || 0);
-        total = other + Math.floor(light / 10) + Math.floor(coins / 1000);
+        // Credits are electronic and carry no Bulk in Starfinder 2e
+        total = other + Math.floor(light / 10);
         update["bulk"] = total;
         return update;
     };
@@ -7598,10 +7575,6 @@ modPf2.getAttrNames(["repeating_bulks"]).forEach(attr => {
         // console.table(eventinfo);
         modPf2.updateBulk(eventinfo.sourceAttribute);
     });
-});
-on("change:cp change:sp change:gp change:pp", (eventinfo) => {
-        // console.table(eventinfo);
-        modPf2.updateBulk(eventinfo.sourceAttribute);
 });
 
 // === ACTIONS
