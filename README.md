@@ -50,11 +50,10 @@ copy (Ctrl+C / Cmd+C), and paste it into the matching tab:
 > bracketed text is Roll20 telling you the translation is missing. Paste `_translation.json`
 > into the Translation tab and the labels turn into normal readable words.
 
-### Step 3 — Turn off Legacy Sanitization
+### Step 3 — Turn on Legacy Sanitization
 
 On the same settings page, find the **Legacy Sanitization** checkbox and make sure it is
-**unchecked**. This sheet uses sheet worker scripts for the skill calculations, and they
-behave best with it off.
+**checked**. This sheet needs it enabled to display and function correctly.
 
 ### Step 4 — Save
 
@@ -83,7 +82,7 @@ Refresh the page. If it still doesn't appear, the image host may be temporarily 
 sheet still works fine without it.
 
 **Computers and Piloting aren't calculating.**
-Confirm Legacy Sanitization is unchecked (Step 3), then save and reopen the character. These
+Confirm Legacy Sanitization is checked (Step 3), then save and reopen the character. These
 two skills run on the same sheet worker scripts as every other skill.
 
 ---
