@@ -1423,7 +1423,7 @@ div.sheet-inventory {
     width: 5em; }
   div.sheet-inventory div.sheet-inv-top-row {
     grid-column: 1 / -1;
-    grid-template-columns: 1fr 2.5fr 2.5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2.5fr 2.5fr 2fr;
     margin: 1%;
     width: 100%; }
   div.sheet-inventory div.sheet-column,
@@ -1504,6 +1504,11 @@ div.sheet-coins {
     margin: auto;
     text-align: center;
     text-transform: uppercase; }
+  div.sheet-coins.sheet-credits h2 {
+    left: calc(50% - 40px);
+    width: 80px;
+    font-size: 0.8em;
+    line-height: 1.6em; }
   div.sheet-coins input[type="text"].sheet-circle, div.sheet-coins div.sheet-circle[type="text"] {
     position: absolute;
     left: calc(50% - 1.5em);
